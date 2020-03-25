@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blog.dao.UserDao">
+
+    <!--查询用户名是否存在-->
+    <select id="usernameIsExist" parameterType="java.lang.String" resultType="User">
+        select * from user where username = #{username}
+    </select>
+
+    <!--重置密码-->
+    <update id="resetPassword" parameterType="User">
+        update user set password = #{password}, updateTime = NOW() where username = #{username}
+    </update>
+
+    <!--用户注册-->
+    <insert id="userRegister" parameterType="User">
+        insert into user(username, password, name, sex, phone, createTime, updateTime)
+        values(#{username}, #{password}, #{name}, #{sex}, #{phone}, NOW(), NOW())
+    </insert>
+
+    <!--用户登录-->
+    <select id="userLogin" parameterType="User" resultType="User">
+        select * from user where username = #{username} and password = #{password}
+    </select>
+
+    <!--查询所有用户-->
+    <select id="findAll" resultType="User" parameterType="java.util.Map">
+        select * from user
+        <where>
+            <if test="user.username != null and user.username != ''">
+                and username like '%${user.username}%'
+            </if>
+            <if test="user.name != null and user.name != ''">
+                and name like '%${user.name}%'
+            </if>
+        </where>
+        limit #{begin}, #{limit}
+    </select>
+
+    <!--查询用户总条数-->
+    <select id="findTotalCount" resultType="java.lang.Integer" parameterType="User">
+        select count(1) from user
+        <where>
+            <if test="username != null and username != ''">
+                and username like '%${username}%'
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <!--根据id删除用户-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user where uid = #{uid}
+    </delete>
+
+    <!--根据id查询用户-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="User">
+        select * from user where uid = #{uid}
+    </select>
+
+    <!--用户信息修改-->
+    <update id="userupdate" parameterType="User">
+        update user set username = #{username}, password = #{password}, name = #{name},
+        sex = #{sex}, phone = #{phone}, permission = #{permission}, updateTime = NOW()
+        where uid = #{uid}
+    </update>
+</mapper>

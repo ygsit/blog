@@ -1,0 +1,45 @@
+.blogButton{
+    width: 64px;
+    height: 38px;
+    color: rgb(0, 181, 173);
+    background-color: white;
+    border: 1px solid rgb(0, 181, 173);
+    font-weight: bolder;
+    margin-left: 71px;
+}
+.blogInput{
+    width: 934px;
+    height: 38px;
+    box-sizing: border-box;
+    padding-left: 5px;
+    margin-left: -4px;
+    vertical-align: top;
+}
+
+.blogInput:focus{
+    outline: 2px solid rgb(0, 181, 173);
+    border: none;
+}
+
+
+.blogRadio{
+    margin-left: 71px;
+}
+
+.blogSubmit{
+    margin-left: 976px;
+}
+
+
+/*writeSuccess*/
+.blog_man{
+    width: 100px;
+    height: 300px;
+    border: 1px solid red;
+    font-size: 18px;
+    margin-left: 200px
+}
+
+.write_hover:hover{
+    color: #00c4ff;
+}

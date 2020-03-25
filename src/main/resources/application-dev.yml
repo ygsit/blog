@@ -1,0 +1,20 @@
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+
+server:
+  #端口号
+  port: 8080
+
+
+logging:
+  #配置日志等级
+  level:
+    root: info
+    #配置打印SQL
+    com.blog: debug

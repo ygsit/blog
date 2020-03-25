@@ -1,0 +1,134 @@
+.sort{
+    box-sizing: border-box;
+    padding: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.sort_box{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 1px solid rgba(9, 9, 9, 0.2);
+    border-radius: 4px;
+    width: 600px;
+    /* min-height: 600px; */
+    margin: 20px;
+    float: left;
+    background-color: #fff;
+}
+.sort_header{
+    height: 56px;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    box-sizing: border-box;
+    padding: 14px;
+    line-height: 28px;
+}
+.a {
+    float: left;
+
+}
+
+.b {
+    float: right;
+
+}
+.number{
+    font-size: 30px;
+    color:rgb(242, 113, 28);
+}
+.sort_title{
+    font-size: 18px;
+    font-weight: 600;
+    color:rgb(0, 181, 173);
+}
+.sort_number{font-size: 18px;}
+.sort_cont{
+    box-sizing: border-box;
+    padding: 14px;
+    flex: 1;
+}
+.sort_label{
+    /*display: flex;*/
+    display: inline-block;
+    box-sizing: border-box;
+     /*order: 1px solid rgb(0, 181, 173);*/
+    border: 1px solid rgba(9,9,9,0.2);
+    border-radius: 4px;
+    color: rgb(0, 181, 173);
+    cursor: pointer;
+    margin: 0 10px 10px 0;
+    /*width: 50px;*/
+}
+.border_change{
+    border: 1px solid rgb(0, 181, 173);
+}
+
+.label_s{
+    /*flex: 1;*/
+    /*width: 30px;*/
+    display: inline-block;
+    padding: 10px;
+}
+.label_e{
+    padding: 10px;
+    border-left: 1px solid rgba(9,9,9,0.2);
+    /*width:20px;*/
+    display: inline-block;
+}
+.group {
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    box-sizing: border-box;
+    padding: 14px;
+    border-bottom: 1px solid rgba(9, 9, 9, 0.2);
+}
+
+.title,
+.description,
+.user {
+    border: 1px solid red;
+}
+
+.title {
+    flex: 3;
+    font-weight: 600;
+}
+
+.description {
+    flex: 4
+}
+
+.user {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 5px 50px 5px 10px ;
+}
+.user_cont{
+    flex: 1;
+}
+.user_label{
+    border: 1px solid rgb(0, 181, 173);
+    border-radius: 4px;
+    color:rgb(0, 181, 173);
+    /*cursor: pointer;*/
+}
+
+.sort_cont_box{
+    background-color: #fff;
+    /*outline-top: 2px solid rgb(0, 181, 173);*/
+    box-sizing: border-box;
+    width: 600px;
+    border-radius:4px;
+    margin: 20px;
+    padding: 14px 14px 0 14px;
+    border: 1px solid rgba(9,9,9,0.2);
+    border-top: 2px solid rgb(0, 181, 173);
+
+}
+
+

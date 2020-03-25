@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>写博客</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <link rel="stylesheet" href="../../static/css/blog.css" th:href="@{/css/blog.css}">
+        <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/blog.js" th:src="@{/js/blog.js}"></script>
+        <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="layoutBody">
+            <div class="layui-container">
+                <form th:action="@{/blog/saveBlog}" onsubmit="return checkForm()">
+                    <input type="hidden" name="uid" th:if="${session.user ne null}" th:value="${session.user.uid}">
+                    <button class="blogButton">标题</button>
+                    <input type="text" placeholder="请输入标题" class="blogInput" name="title" id="title" onblur="checkTitle()"><br><br>
+
+                    <div id="md-content">
+                        <textarea placeholder="博客内容" name="content" id="content" style="display: none"></textarea>
+                    </div>
+
+                    <button class="blogButton">分类</button>
+                    <select class="blogInput" name="tid">
+                        <option th:each="type:${types}" th:value="${type.tid}" th:text="${type.name}"></option>
+                    </select><br><br>
+                    <div class="blogRadio">
+                        <input type="radio" name="isPublic" value="0">私密&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="isPublic" value="1" checked>公开
+                    </div><br><br>
+                    <input type="submit" value="立即发布" class="layui-btn blogSubmit">
+                </form>
+
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+        <script>
+            //用于显示当前页面
+            $("#writeBlog").addClass('layui-this');
+
+            //初始化Markdown编辑器
+            var contentEditor;
+            $(function() {
+                contentEditor = editormd("md-content", {
+                    width   : "87.5%",
+                    height  : 640,
+                    syncScrolling : "single",
+                    // path    : "../../static/lib/editormd/lib/"
+                    path    : "/lib/editormd/lib/"
+                });
+            });
+        </script>
+    </body>
+</html>

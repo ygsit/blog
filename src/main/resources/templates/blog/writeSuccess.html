@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>博客发布成功</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <link rel="stylesheet" href="../../static/css/blog.css" th:href="@{/css/blog.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+
+
+        <div class="layoutBody">
+            <div class="layui-container">
+                <div class="blog_man">
+                    <a href="#"><i class="layui-icon" style="color: #1d75b3">&#xe603;</i><span style="color: #1d75b3">管理博文</span></a>
+                </div>
+                <div style="text-align: center">
+                    <p style="color: green; font-size: 20px">博客发布成功!</p><br>
+                    <a href="#" class="write_hover">再写一篇</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="write_hover">返回首页</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

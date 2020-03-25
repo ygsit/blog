@@ -1,0 +1,24 @@
+spring:
+  #选择激活使用的配置文件
+  profiles:
+    active: dev
+
+  #配置thymeleaf
+  thymeleaf:
+    #应用于模板的模板模式，支持 HTML, XML TEXT JAVASCRIPT
+    mode: HTML5
+    #编码
+    encoding: UTF-8
+    #在构建URL时预先查看名称的前缀
+    prefix: classpath:/templates/
+    #构建URL时附加到查看名称的后缀
+    suffix: .html
+    #开发配置为false,避免修改模板还要重启服务器
+    cache: false
+
+#mybatis配置
+mybatis:
+  #配置别名
+  type-aliases-package: com.blog.domain
+  #加载Mybatis映射文件位置
+  mapper-locations: classpath:mapper/*Mapper.xml

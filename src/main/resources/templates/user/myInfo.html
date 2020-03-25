@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/login.js" th:src="@{/js/login.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="layoutBody">
+            <div class="layui-container">
+                <br>
+                <form class="layui-form" method="post" th:action="@{/user/showMe(uid=${session.user.uid})}">
+                    <input type="hidden" name="uid" th:if="${session.user ne null}" th:value="${session.user.uid}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" placeholder="请输入用户名" class="layui-input"
+                                   th:if="${findUser ne null}" th:value="${findUser.username}" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="password" lay-verify="required|pass" placeholder="请输入密码"
+                                   th:if="${findUser ne null}" th:value="${findUser.password}"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" lay-verify="required|truename" placeholder="请输入姓名"
+                                   th:if="${findUser ne null}" th:value="${findUser.name}"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="sex" value="男" title="男" th:checked="${findUser.sex == '男'} ? true : false">
+                            <input type="radio" name="sex" value="女" title="女" th:checked="${findUser.sex == '女'} ? true : false">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码"
+                                   th:if="${findUser ne null}" th:value="${findUser.phone}"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="submit" class="layui-btn" style="width: 200px; margin-left: 400px"
+                                   lay-submit lay-filter="userInfo" value="立即修改"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+        <script>
+            <!--选中效果-->
+            $("#myInfo").addClass('layui-this');
+
+            layui.use('form', function () {
+                var form = layui.form;
+                //监听用户注册
+                form.on('submit(userInfo)', function (data) {
+                    var json = data.field;
+                    $.post("/user/userupdate", {
+                        "uid": json.uid,
+                        "username": json.username,
+                        "password": json.password,
+                        "name": json.name,
+                        "sex": json.sex,
+                        "phone": json.phone,
+                    }, function (result) {
+                    })
+                    return true;
+                });
+            })
+        </script>
+
+    </body>
+</html>

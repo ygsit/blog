@@ -1,0 +1,14 @@
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://139.224.225.49:3306/blog?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+logging:
+  #配置日志等级
+  level:
+    root: warn
+    #配置打印SQL
+    com.blog: info

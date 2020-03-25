@@ -1,0 +1,36 @@
+.footer {
+    height: 100px;
+    margin: 0 auto;
+    background-color: #23262E;
+    color: #BDBEC1;
+    margin-bottom: 10px;
+}
+.footer .font{
+    width: 650px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.layoutBody{
+    background: url("../images/bodybg.png");
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    flex:1;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/*.footer{*/
+    /*position:fixed;*/
+    /*bottom: 0px;*/
+/*}*/

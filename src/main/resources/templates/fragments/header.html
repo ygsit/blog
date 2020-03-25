@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>header</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+    </head>
+    <body>
+        <div th:fragment="header">
+            <div class="layui-layout layui-layout-admin">
+                <div class="layui-header">
+                    <div class="layui-logo">BLOG</div>
+                    <!-- 头部区域（可配合layui已有的水平导航） -->
+                    <ul class="layui-nav layui-layout-left">
+                        <li class="layui-nav-item" id="index"><a href="javascript:;" th:href="@{/}">首页</a></li>
+                        <li class="layui-nav-item" id="writeBlog"><a href="javascript:;" th:href="@{/blog/writeBlog}">写博客</a></li>
+                        <li class="layui-nav-item" id="type"><a href="javascript:;" th:href="@{/type/toType}">分类</a></li>
+                        <li class="layui-nav-item" id="userManage"><a href="javascript:;" th:href="@{/user/toUserList}">用户管理</a></li>
+                        <li class="layui-nav-item" id="blogManage"><a href="javascript:;">博客管理</a></li>
+                        <li class="layui-nav-item" id="commentManage"><a href="javascript:;">评论管理</a></li>
+                        <li class="layui-nav-item" id="myInfo"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/showMe(uid=${session.user.uid})}">我的信息</a></li>
+                        <li class="layui-nav-item" id="myBlogs"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/blog/showMyBlogs(uid=${session.user.uid})}">我的博客</a></li>
+                    </ul>
+                    <ul class="layui-nav layui-layout-right">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">
+                                <img src="../../static/images/tx.jpeg" th:src="@{/images/tx.jpeg}"
+                                     class="layui-nav-img">
+                                <span th:if="${session.user ne null}" th:text="${session.user.name}"></span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">立即退出</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

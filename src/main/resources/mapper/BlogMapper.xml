@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blog.dao.BlogDao">
+
+    <!--保存博客-->
+    <insert id="saveBlog" parameterType="Blog">
+        insert into blog(title, content, isPublic, createTime, tid, uid)
+        values(#{title}, #{content}, #{isPublic}, NOW(), #{tid}, #{uid})
+    </insert>
+
+    <!--我的博客-->
+    <select id="showMyBlogs" parameterType="java.lang.Integer">
+        select
+          b.bid,
+          b.title,
+          b.content,
+          b.view,
+          b.isPublic,
+          b.createTime,
+          t.name
+        from
+          blog b,
+          type t
+        where
+          b.uid = #{uid}
+        and
+          b.tid = t.tid
+    </select>
+</mapper>
