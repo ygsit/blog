@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>分类</title>
         <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
         <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
         <link rel="stylesheet" href="../../static/css/type.css" th:href="@{/css/type.css}">
         <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
         <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
         <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/type.js" th:src="@{/js/type.js}"></script>
     </head>
     <body>
         <div th:replace="~{fragments/header :: header}"></div>
@@ -18,44 +19,38 @@
                 <div class="sort_box">
                     <div class="sort_header">
                         <div class="sort_title a">分类</div>
-                        <div class="sort_number b">共<span class="number">2</span>个</div>
+                        <div class="sort_number b">共<span class="number">[[${map.counts}]]</span>个</div>
                     </div>
                     <div class="sort_cont">
-                        <div class="sort_label">
-                            <div class="label_s">java</div>
-                            <div class="label_e">2</div>
-                        </div>
-
-                        <div class="sort_label">
-                            <div class="label_s">java</div>
-                            <div class="label_e">2</div>
+                        <!--<div class="sort_label" th:each="type:${map.list}" th:οnclick="'findByTid('+${type.id}+')'">-->
+                        <div class="sort_label" th:each="type:${map.list}" th:οnclick="findByTid([[${type.id}]])">
+                            <!--<div class="sort_label" th:each="type:${map.list}" onclick="findByTid(event)">-->
+                            <input type="hidden" th:value="${type.id}" class="type_id">
+                                <div class="label_s" th:text="${type.name}">java</div>
+                            <div class="label_e" th:text="${type.count}">2</div>
                         </div>
                     </div>
                 </div>
                 <div class="sort_cont_box">
-                    <div class="group">
+                    <div class="group"  th:each="blog:${map.blogs}">
                         <div class="title">
-                            <span>php</span>
+                            <span th:text="${blog.title}">php</span>
                         </div>
                         <div class="description">
-                            <span>php...</span>
+                            <span th:text="${blog.content}">php...</span>
                         </div>
                         <div class="user">
-                            <user class="user_cont"></user>
-                            <div class="user_label">java</div>
+                            <div class="user_cont">
+                                <i class="layui-icon">&#xe612;</i> <span th:text="${blog.username}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="layui-icon">&#xe637;</i> <span th:text="${blog.showTime}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="iconfont">&#xe60c;</i> <span th:text="${blog.view}"></span>
+                            </div>
+                            <div class="user_label" th:text="${blog.tname}">java</div>
                         </div>
                     </div>
-                    <div class="group">
-                        <div class="title">
-                            <span>php</span>
-                        </div>
-                        <div class="description">
-                            <span>php...</span>
-                        </div>
-                        <div class="user">
-                            <user class="user_cont"></user>
-                            <div class="user_label">java</div>
-                        </div>
+                    <div>
+                        <a class="layui-btn layui-btn-radius btn_left" th:if="${map.currentPage != 1}" th:href="@{/type/toType(currentPage=${map.currentPage - 1})}">上一页</a>
+                        <a class="layui-btn layui-btn-radius btn_right" th:if="${map.currentPage != map.totalPage && map.typeBlogCount > map.pageCount}" th:href="@{/type/toType(currentPage=${map.currentPage + 1})}">下一页</a>
                     </div>
                 </div>
             </div>

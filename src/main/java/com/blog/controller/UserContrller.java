@@ -56,7 +56,14 @@ public class UserContrller {
 
     //用户登录
     @RequestMapping("/userLogin")
-    public String userLogin(User user, Model model, HttpServletRequest request) {
+    public String userLogin(User user, String checkCode, Model model, HttpServletRequest request) {
+        String verifyCode = (String)request.getSession().getAttribute("verifyCode");
+        request.getSession().removeAttribute("verifyCode");
+        if(!verifyCode.equalsIgnoreCase(checkCode)){
+            model.addAttribute("login_err", "验证码错误!");
+            //跳转到当前登录页面
+            return "login";
+        }
         User loginUser = userService.userLogin(user);
         if (loginUser == null) {
             model.addAttribute("login_err", "用户名或密码错误!");
@@ -64,7 +71,7 @@ public class UserContrller {
             return "login";
         }
         request.getSession().setAttribute("user", loginUser);
-        return "index";
+        return "redirect:/";
     }
 
     //跳到用户列表

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequestMapping("/blog")
@@ -39,7 +40,7 @@ public class BlogController {
     //跳转到我的博客
     @RequestMapping("/showMyBlogs")
     public String showMyBlogs(int uid){
-        List<Blog> blogs = blogService.showMyBlogs(uid);
+        List<HashMap<String, Object>> blogs = blogService.showMyBlogs(uid);
         return "blog/myBlogs";
     }
 

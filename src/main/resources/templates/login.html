@@ -25,6 +25,26 @@
                 <input type="password" class="btn_psd btn_m" name="password" placeholder="请输入密码" onblur="checkPassword()" id="loginPassword"/>
             </div>
 
+            <div class="btn_box">
+                <i class="layui-icon el-input__prefix layadmin-user-login-icon layui-icon-vercode"></i>
+                <input type="text" class="btn_psd btn_m input_code" name="checkCode" placeholder="请输入验证码" onblur="checkVercode()" id="vercode"/>
+                <img src="/getVerifyCode" class="checkCode" id="vcode" onclick="changeCode()">
+            </div>
+
+
+            <!--<div class="layui-form-item">
+                <div class="layui-row">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                    <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                            &lt;!&ndash;<img src="/getVerifyCode" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">&ndash;&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
             <div class="divBtn">
                 <input type="submit" class="layui-btn layui-btn-normal btn_sub" value="登录">
             </div>

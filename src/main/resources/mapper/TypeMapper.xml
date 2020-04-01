@@ -8,4 +8,27 @@
         select * from type
     </select>
 
+    <!--查询总数-->
+    <select id="findCounts" resultType="java.lang.Integer">
+        select count(tid) from type
+    </select>
+
+    <!--查询某一个分类的数量-->
+    <select id="findNameCount" resultType="java.lang.Integer">
+        select
+          count(b.bid)
+        from
+          type t,
+          blog b
+        where
+          t.name = #{name}
+        AND
+          t.tid = b.tid
+    </select>
+
+    <!--查询首页5条分类的数量-->
+    <select id="findOnePage" resultType="Type">
+         select * from type limit 0, 5
+    </select>
+
 </mapper>

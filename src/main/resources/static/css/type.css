@@ -86,11 +86,11 @@
     border-bottom: 1px solid rgba(9, 9, 9, 0.2);
 }
 
-.title,
+/*.title,
 .description,
 .user {
     border: 1px solid red;
-}
+}*/
 
 .title {
     flex: 3;
@@ -129,6 +129,19 @@
     border: 1px solid rgba(9,9,9,0.2);
     border-top: 2px solid rgb(0, 181, 173);
 
+}
+
+.btn_left{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.btn_right{
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 

@@ -1,15 +1,25 @@
 package com.blog.domain;
 
 public class Type {
-    private int tid;
+    private Integer tid;
     private String name;
+    //创建人id
+    private Integer uid;
 
-    public int getTid() {
+    public Integer getTid() {
         return tid;
     }
 
-    public void setTid(int tid) {
+    public void setTid(Integer tid) {
         this.tid = tid;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getName() {

@@ -18,4 +18,19 @@ public class TypeServiceImpl implements TypeService {
     public List<Type> findAll() {
         return typeDao.findAll();
     }
+
+    @Override
+    public int findCounts() {
+        return typeDao.findCounts();
+    }
+
+    @Override
+    public int findNameCount(String name) {
+        return typeDao.findNameCount(name);
+    }
+
+    @Override
+    public List<Type> findOnePage() {
+        return typeDao.findOnePage();
+    }
 }

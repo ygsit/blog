@@ -10,7 +10,7 @@
     </insert>
 
     <!--我的博客-->
-    <select id="showMyBlogs" parameterType="java.lang.Integer">
+    <select id="showMyBlogs" parameterType="java.lang.Integer" resultType="java.util.Map">
         select
           b.bid,
           b.title,
@@ -26,5 +26,71 @@
           b.uid = #{uid}
         and
           b.tid = t.tid
+    </select>
+
+    <!--分类页面显示的博客-->
+    <select id="findByTid" parameterType="java.util.Map" resultType="BlogDto">
+        select
+          b.bid,
+          b.title,
+          b.content,
+          b.createTime,
+--           DATE_FORMAT( b.createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          b.view,
+          u.username,
+          t.name tname
+        from
+          blog b,
+          user u,
+          type t
+        where
+          b.tid = #{tid}
+        AND
+          b.uid = u.uid
+        AND
+          b.tid = t.tid
+        ORDER BY
+		  createTime DESC
+        limit
+          #{offset}, #{pageCount}
+    </select>
+
+    <!--查询博客总数-->
+    <select id="findTotalCounts" resultType="java.lang.Integer">
+        select count(bid) from blog
+    </select>
+
+    <!--查询一页的博客-->
+    <select id="findByPage" parameterType="java.util.Map" resultType="BlogDto">
+        select
+          b.bid,
+          b.title,
+          b.content,
+          DATE_FORMAT( b.createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          b.view,
+          u.username,
+          t.name tname
+        from
+          blog b,
+          user u,
+          type t
+        where
+          b.uid = u.uid
+        AND
+          b.tid = t.tid
+        ORDER BY
+		  createTime DESC
+        limit
+          #{offset}, #{pageCount}
+    </select>
+
+    <!--根据分类id查询分类博客的数量-->
+    <select id="findPageTypeBlogCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+          count(bid)
+        from
+          blog
+        where
+          tid = #{tid}
     </select>
 </mapper>

@@ -129,13 +129,39 @@ function checkPassword() {
     }
 }
 
+//校验验证码
+function checkVercode() {
+    var codeValue = $("#vercode").val();
+    if(codeValue.trim() == ""){
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.tips('验证码不能为空', '#vercode', {
+                tips: [1, '#3595CC'],
+                time: 4000
+            });
+        });
+        return false;
+    } else {
+        return true;
+    }
+}
+
 //登录提交验证
 function checkForm() {
-    if(checkUsername() && checkPassword()){
+    if(checkUsername() && checkPassword() && checkVercode()){
         return true;
     }
     else {
         return false;
     }
+}
+
+
+//点击验证码变化
+function changeCode() {
+    //1.获取验证码图片对象
+    var vcode = document.getElementById("vcode");
+    //2.设置其src属性，加时间戳
+    vcode.src = '/getVerifyCode?time=' + new Date().getTime()
 }
 

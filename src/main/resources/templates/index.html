@@ -21,43 +21,29 @@
                     <div class="box">
                         <div class="box-header">
                             <span class="a aa">博客</span>
-                            <span class="b bb">共<span class="number">3</span>篇</span>
+                            <span class="b bb">共<span class="number" th:text="${map.counts}">3</span>篇</span>
                         </div>
                         <div class="box-content">
-                            <div class="group">
+                            <div class="group" th:each="blog:${map.blogs}">
                                 <div class="title">
-
+                                    <span th:text="${blog.title}">php</span>
                                 </div>
                                 <div class="description">
-
+                                    <span th:text="${blog.content}">php...</span>
                                 </div>
                                 <div class="user">
-
+                                    <div class="user_cont">
+                                        <i class="layui-icon">&#xe612;</i> <span th:text="${blog.username}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="layui-icon">&#xe637;</i> <span th:text="${blog.showTime}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="iconfont">&#xe60c;</i> <span th:text="${blog.view}"></span>
+                                    </div>
+                                    <div class="user_label" th:text="${blog.tname}">java</div>
                                 </div>
                             </div>
-                            <div class="group">
-                                <div class="title">
-
-                                </div>
-                                <div class="description">
-
-                                </div>
-                                <div class="user">
-
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="title">
-                                    <span>php</span>
-                                </div>
-                                <div class="description">
-                                    <span>php...</span>
-                                </div>
-                                <div class="user">
-                                    <user class="user_cont"></user>
-                                    <div class="user_label">java</div>
-                                </div>
-                            </div>
+                        </div>
+                        <div>
+                            <a class="layui-btn layui-btn-radius btn_left" th:if="${map.currentPage != 1}" th:href="@{/(currentPage=${map.currentPage - 1})}">上一页</a>
+                            <a class="layui-btn layui-btn-radius btn_right" th:if="${map.currentPage != map.totalPage}" th:href="@{/(currentPage=${map.currentPage + 1})}">下一页</a>
                         </div>
                     </div>
                     <div class="box2">
@@ -70,18 +56,10 @@
                         </div>
                         <div class="box2-content">
                             <div class="box2-group-box">
-                                <div class="box2-group">
-                                    <span class="a">java</span>
+                                <div class="box2-group" th:each="type:${map.list}">
+                                    <span class="a" th:text="${type.name}">python</span>
                                     <!--<i class="b"></i>-->
-                                </div>
-                                <div class="box2-group">
-                                    <span class="a">python</span>
-                                    <!--<i class="b"></i>-->
-                                    <span class="b">1</span>
-                                </div>
-                                <div class="box2-group">
-                                    <span class="a">python</span>
-                                    <!--<i class="b"></i>-->
+                                    <span class="b" th:text="${type.count}">1</span>
                                 </div>
                             </div>
                         </div>
