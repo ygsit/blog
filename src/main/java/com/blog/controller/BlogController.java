@@ -31,7 +31,7 @@ public class BlogController {
     }
 
     //保存博客
-    @RequestMapping("saveBlog")
+    @RequestMapping("/saveBlog")
     public String saveBlog(Blog blog){
         blogService.saveBlog(blog);
         return "blog/writeSuccess";

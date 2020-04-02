@@ -23,8 +23,7 @@
                     </div>
                     <div class="sort_cont">
                         <!--<div class="sort_label" th:each="type:${map.list}" th:οnclick="'findByTid('+${type.id}+')'">-->
-                        <div class="sort_label" th:each="type:${map.list}" th:οnclick="findByTid([[${type.id}]])">
-                            <!--<div class="sort_label" th:each="type:${map.list}" onclick="findByTid(event)">-->
+                            <div class="sort_label" th:each="type:${map.list}" onclick="findByTid(event)">
                             <input type="hidden" th:value="${type.id}" class="type_id">
                                 <div class="label_s" th:text="${type.name}">java</div>
                             <div class="label_e" th:text="${type.count}">2</div>

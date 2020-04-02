@@ -1,0 +1,13 @@
+.notFoundError{
+    background: url("../images/404.jpg") no-repeat;
+    background-size:100% 100%;
+    background-attachment: fixed;
+}
+
+.dataError{
+    width: 750px;
+    height: 500px;
+    background: url("../images/500.jpg") no-repeat;
+    margin: 0 auto;
+    margin-top: 200px;
+}
