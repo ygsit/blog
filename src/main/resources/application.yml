@@ -1,7 +1,7 @@
 spring:
   #选择激活使用的配置文件
   profiles:
-    active: dev
+    active: prod
 
   #配置thymeleaf
   thymeleaf:
