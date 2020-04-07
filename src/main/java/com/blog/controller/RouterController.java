@@ -50,8 +50,10 @@ public class RouterController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         for (BlogDto blog : blogs) {
             String content = blog.getContent();
-            String substring = content.substring(0, 19) + "....";
-            blog.setContent(substring);
+            if(content.length() > 20){
+                String substring = content.substring(0, 19) + "....";
+                blog.setContent(substring);
+            }
             String format = simpleDateFormat.format(blog.getCreateTime());
             blog.setShowTime(format);
         }

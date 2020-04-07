@@ -33,4 +33,14 @@ public class TypeServiceImpl implements TypeService {
     public List<Type> findOnePage() {
         return typeDao.findOnePage();
     }
+
+    @Override
+    public void typeAdd(Type type) {
+        typeDao.typeAdd(type);
+    }
+
+    @Override
+    public Integer typeNameIsExist(String name) {
+        return typeDao.typeNameIsExist(name);
+    }
 }

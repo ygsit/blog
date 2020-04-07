@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,12 +86,39 @@ public class TypeController {
             blog.setShowTime(format);
             //处理博客内容
             String content = blog.getContent();
-            String substring = content.substring(0, 19) + "....";
-            blog.setContent(substring);
+            if(content.length() > 20){
+                String substring = content.substring(0, 19) + "....";
+                blog.setContent(substring);
+            }
         }
         map.put("blogs", blogs);
         model.addAttribute("map", map);
         return "type/type";
+    }
+
+    //判断分类名是否存在
+    @RequestMapping("/typeNameIsExist")
+    @ResponseBody
+    public String typeNameIsExist(String name){
+        Integer integer = typeService.typeNameIsExist(name);
+        if (integer != null && integer != 0){
+            //已存在
+            return "true";
+        }
+        return "false";
+    }
+
+    //添加分类
+    @RequestMapping("/typeAdd")
+    @ResponseBody
+    public void typeAdd(Type type){
+        typeService.typeAdd(type);
+    }
+
+    //跳转
+    @RequestMapping("/toTypeList")
+    public String toTypeList(){
+        return "type/typeList";
     }
 
 }

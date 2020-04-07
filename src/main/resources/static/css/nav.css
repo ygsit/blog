@@ -12,6 +12,14 @@
     padding-top: 20px;
 }
 
+.footer .font .beian{
+    color: #BDBEC1;
+}
+
+.footer .font .beian:hover{
+    color: white;
+}
+
 .layoutBody{
     background: url("../images/bodybg.png");
     width: 100%;

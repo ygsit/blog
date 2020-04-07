@@ -17,4 +17,10 @@ public interface TypeService {
 
     //查询5条分类的数量
     List<Type> findOnePage();
+
+    //添加分类
+    void typeAdd(Type type);
+
+    //判断分类名是否存在
+    Integer typeNameIsExist(String name);
 }

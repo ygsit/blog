@@ -4,46 +4,36 @@
         <meta charset="UTF-8">
         <title>用户登录</title>
         <link rel="stylesheet" type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}"/>
-        <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" />
+        <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}"/>
         <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
         <script src="../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
         <script src="../static/js/login.js" th:src="@{/js/login.js}"></script>
     </head>
     <body>
-        <form action="index.html" th:action="@{/user/userLogin}" class="loginForm" method="post" onsubmit="return checkForm()">
+        <form action="index.html" th:action="@{/user/userLogin}" class="loginForm" method="post"
+              onsubmit="return checkForm()">
             <div class="divBtn divFont">
-                个人博客系统
+                博客系统
             </div>
 
             <div class="btn_box">
                 <i class="layui-icon el-input__prefix">&#xe770;</i>
-                <input type="text" class="btn_user btn_m" name="username" placeholder="请输入用户名" onblur="checkUsername()" id="loginUsername"/>
+                <input type="text" class="btn_user btn_m" name="username" placeholder="请输入用户名" onblur="checkUsername()"
+                       id="loginUsername"/>
             </div>
 
             <div class="btn_box">
                 <i class="layui-icon el-input__prefix">&#xe673;</i>
-                <input type="password" class="btn_psd btn_m" name="password" placeholder="请输入密码" onblur="checkPassword()" id="loginPassword"/>
+                <input type="password" class="btn_psd btn_m" name="password" placeholder="请输入密码"
+                       onblur="checkPassword()" id="loginPassword"/>
             </div>
 
             <div class="btn_box">
                 <i class="layui-icon el-input__prefix layadmin-user-login-icon layui-icon-vercode"></i>
-                <input type="text" class="btn_psd btn_m input_code" name="checkCode" placeholder="请输入验证码" onblur="checkVercode()" id="vercode"/>
+                <input type="text" class="btn_psd btn_m input_code" name="checkCode" placeholder="请输入验证码"
+                       onblur="checkVercode()" id="vercode"/>
                 <img src="/getVerifyCode" class="checkCode" id="vcode" onclick="changeCode()">
             </div>
-
-
-            <!--<div class="layui-form-item">
-                <div class="layui-row">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                    <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
-                    <div class="layui-col-xs5">
-                        <div style="margin-left: 10px;">
-                            <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
-                            &lt;!&ndash;<img src="/getVerifyCode" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">&ndash;&gt;
-                        </div>
-                    </div>
-                </div>
-            </div>-->
 
             <div class="divBtn">
                 <input type="submit" class="layui-btn layui-btn-normal btn_sub" value="登录">
@@ -53,7 +43,8 @@
             </div>
 
             <div class="divFont">
-                <span class="a_hover" onclick="forgetPassword()">忘记密码</span> | 没有账号？<span class="a_hover" onclick="userRegister()">立即注册</span>
+                <span class="a_hover" onclick="forgetPassword()">忘记密码</span> | 没有账号？<span class="a_hover"
+                                                                                          onclick="userRegister()">立即注册</span>
             </div>
         </form>
 
@@ -65,19 +56,22 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="username"  lay-verify="required|usernameIsNotExist" placeholder="请输入用户名" class="layui-input biaodan">
+                        <input type="text" name="username" lay-verify="required|usernameIsNotExist" placeholder="请输入用户名"
+                               class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-block">
-                        <input type="password" name="password" id="password" lay-verify="required|pass" placeholder="请输入密码" class="layui-input biaodan">
+                        <input type="password" name="password" id="password" lay-verify="required|pass"
+                               placeholder="请输入密码" class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">确认密码</label>
                     <div class="layui-input-block">
-                        <input type="password" name="confirmPassword" lay-verify="required|confirmPass" placeholder="请再次输入密码" class="layui-input biaodan">
+                        <input type="password" name="confirmPassword" lay-verify="required|confirmPass"
+                               placeholder="请再次输入密码" class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -96,19 +90,22 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="username"  lay-verify="required|usernameIsExist" placeholder="请输入用户名" class="layui-input biaodan">
+                        <input type="text" name="username" lay-verify="required|usernameIsExist" placeholder="请输入用户名"
+                               class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-block">
-                        <input type="password" name="password" lay-verify="required|pass" placeholder="请输入密码" class="layui-input biaodan">
+                        <input type="password" name="password" lay-verify="required|pass" placeholder="请输入密码"
+                               class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required|truename" placeholder="请输入姓名" class="layui-input biaodan">
+                        <input type="text" name="name" lay-verify="required|truename" placeholder="请输入姓名"
+                               class="layui-input biaodan">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -121,7 +118,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" class="layui-input biaodan">
+                        <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码"
+                               class="layui-input biaodan">
                     </div>
                 </div>
                 <br>
@@ -135,15 +133,18 @@
 
 
         <script>
-            layui.use(['form','layer','jquery'], function(){
+            layui.use(['form', 'layer', 'jquery'], function () {
                 var form = layui.form;
                 // var layer = layui.layer;
                 //监听重置密码
                 form.on('submit(userForgetPassword)', function (data) {
                     alert('重置密码成功');
                     // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                    var json  = data.field;
-                    $.post("/user/resetPassword", {"username":json.username, "password":json.password}, function (result) {
+                    var json = data.field;
+                    $.post("/user/resetPassword", {
+                        "username": json.username,
+                        "password": json.password
+                    }, function (result) {
                     })
                     return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                 });
@@ -152,8 +153,14 @@
                 form.on('submit(userRegister)', function (data) {
                     alert('用户注册成功');
                     // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                    var json  = data.field;
-                    $.post("/user/userRegister", {"username":json.username, "password":json.password, "name":json.name, "sex":json.sex, "phone":json.phone}, function (result) {
+                    var json = data.field;
+                    $.post("/user/userRegister", {
+                        "username": json.username,
+                        "password": json.password,
+                        "name": json.name,
+                        "sex": json.sex,
+                        "phone": json.phone
+                    }, function (result) {
                     })
                     return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                 });

@@ -31,4 +31,14 @@
          select * from type limit 0, 5
     </select>
 
+    <!--添加分类-->
+    <select id="typeAdd" parameterType="Type">
+        insert into type(name, uid, createTime, updateTime) values(#{name}, #{uid}, NOW(), NOW())
+    </select>
+
+    <!--判断分类名是否存在-->
+    <select id="typeNameIsExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(tid) from type where name = #{name}
+    </select>
+
 </mapper>
