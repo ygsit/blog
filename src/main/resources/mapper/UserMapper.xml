@@ -67,4 +67,9 @@
         sex = #{sex}, phone = #{phone}, permission = #{permission}, updateTime = NOW()
         where uid = #{uid}
     </update>
+
+    <!--根据id查询姓名-->
+    <select id="findUsernameByUid" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select name from user where uid = #{uid}
+    </select>
 </mapper>

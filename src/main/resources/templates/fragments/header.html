@@ -21,7 +21,7 @@
                         <li class="layui-nav-item" id="type"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/type/toType}">分类</a></li>
                         <li class="layui-nav-item" id="userManage"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/toUserList}">用户管理</a></li>
                         <li class="layui-nav-item" id="blogManage"><a href="javascript:;" th:if="${session.user ne null}">博客管理</a></li>
-                        <li class="layui-nav-item" id="typeManage"><a href="javascript:;" th:if="${session.user ne null}">分类管理</a></li>
+                        <li class="layui-nav-item" id="typeManage"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/type/toTypeManage}">分类管理</a></li>
                         <li class="layui-nav-item" id="commentManage"><a href="javascript:;" th:if="${session.user ne null}">评论管理</a></li>
                         <li class="layui-nav-item" id="myInfo"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/showMe(uid=${session.user.uid})}">我的信息</a></li>
                         <li class="layui-nav-item" id="myBlogs"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/blog/showMyBlogs(uid=${session.user.uid})}">我的博客</a></li>

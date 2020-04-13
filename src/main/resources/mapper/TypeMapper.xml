@@ -5,7 +5,14 @@
 
     <!--查询所有分类-->
     <select id="findAll" resultType="Type">
-        select * from type
+        select
+          tid,
+          name,
+          uid,
+          DATE_FORMAT( createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          DATE_FORMAT( updateTime, '%Y-%m-%d %H:%i:%s' ) updateTime
+        from
+          type
     </select>
 
     <!--查询总数-->
@@ -39,6 +46,45 @@
     <!--判断分类名是否存在-->
     <select id="typeNameIsExist" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(tid) from type where name = #{name}
+    </select>
+
+    <!--查询某一个人创建的分类-->
+    <select id="findAllByPage" resultType="Type" parameterType="java.util.Map">
+        select
+          tid,
+          name,
+          uid,
+          DATE_FORMAT(createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          DATE_FORMAT(updateTime, '%Y-%m-%d %H:%i:%s' ) updateTime
+        from
+          type
+        <!-- where标签可以自动添加where，同时处理sql语句中第一个and关键字 -->
+        <where>
+            <if test="type.uid != null and type.uid != ''">
+                and uid = #{type.uid}
+            </if>
+            <if test="type.name != null and type.name != ''">
+                and name like '%${type.name}%'
+            </if>
+        </where>
+        limit #{begin}, #{limit}
+    </select>
+
+    <!--查询某一个人创建的分类数量-->
+    <select id="findCountsByUid" resultType="java.lang.Integer" parameterType="Type">
+        select
+          count(tid)
+        from
+          type
+        <!-- where标签可以自动添加where，同时处理sql语句中第一个and关键字,只能处理写在前面的and,无法去除掉后面的and关键字 -->
+        <where>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%${name}%'
+            </if>
+        </where>
     </select>
 
 </mapper>

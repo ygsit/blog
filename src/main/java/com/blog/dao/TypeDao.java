@@ -4,6 +4,7 @@ import com.blog.domain.Type;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TypeDao {
@@ -25,4 +26,10 @@ public interface TypeDao {
 
     //判断分类名是否存在
     Integer typeNameIsExist(String name);
+
+    //查询某一个人创建的分类
+    List<Type> findAllByPage(Map<String, Object> map);
+
+    //查询某一个人创建的分类数量
+    Integer findCountsByUid(Type type);
 }

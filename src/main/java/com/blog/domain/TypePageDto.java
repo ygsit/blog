@@ -1,10 +1,10 @@
 package com.blog.domain;
 
-public class Type {
+public class TypePageDto {
     private Integer tid;
     private String name;
-    //创建人id
-    private Integer uid;
+    //创建人
+    private String username;
 
     private String createTime;
     private String updateTime;
@@ -17,12 +17,12 @@ public class Type {
         this.tid = tid;
     }
 
-    public Integer getUid() {
-        return uid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {

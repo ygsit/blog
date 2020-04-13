@@ -6,7 +6,9 @@ import com.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TypeServiceImpl implements TypeService {
@@ -42,5 +44,20 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public Integer typeNameIsExist(String name) {
         return typeDao.typeNameIsExist(name);
+    }
+
+    @Override
+    public List<Type> findAllByPage(int page, int limit, Type type) {
+        Map<String, Object> map = new HashMap<>();
+        int begin = (page - 1) * limit;
+        map.put("begin", begin);
+        map.put("limit", limit);
+        map.put("type", type);
+        return typeDao.findAllByPage(map);
+    }
+
+    @Override
+    public Integer findCountsByUid(Type type) {
+        return typeDao.findCountsByUid(type);
     }
 }

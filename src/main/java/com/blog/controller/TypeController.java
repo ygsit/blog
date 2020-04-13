@@ -3,8 +3,12 @@ package com.blog.controller;
 import com.blog.domain.BlogDto;
 import com.blog.domain.Type;
 import com.blog.domain.TypeDto;
+import com.blog.domain.TypePageDto;
 import com.blog.service.BlogService;
 import com.blog.service.TypeService;
+import com.blog.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,9 @@ public class TypeController {
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/toType")
     public String toType(Model model, Integer tid, Integer currentPage, Integer pageCount) {
@@ -119,6 +126,58 @@ public class TypeController {
     @RequestMapping("/toTypeList")
     public String toTypeList(){
         return "type/typeList";
+    }
+
+    //查询所有
+    @RequestMapping("/findAll")
+    @ResponseBody
+    public String findAll(int page, int limit, Type type){
+        List<Type> types = typeService.findAllByPage(page, limit, type);
+        List<TypePageDto> list = new ArrayList<>();
+        for (Type type1 : types) {
+            TypePageDto typePageDto = new TypePageDto();
+            typePageDto.setTid(type1.getTid());
+            typePageDto.setName(type1.getName());
+            typePageDto.setCreateTime(type1.getCreateTime());
+            typePageDto.setUpdateTime(type1.getUpdateTime());
+            String username = userService.findUsernameByUid(type1.getUid());
+            typePageDto.setUsername(username);
+            list.add(typePageDto);
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        ObjectMapper mapper = new ObjectMapper();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", typeService.findCountsByUid(type));
+        map.put("data", list);
+        String value = null;
+        try {
+            value = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
+
+    //跳转到分类管理页面
+    @RequestMapping("/toTypeManage")
+    public String toTypeManage(Model model){
+        model.addAttribute("manager","1");
+        return "type/typeList";
+    }
+
+    //跳转到增加分类页
+    @RequestMapping("/toTypeAddPage")
+    public String toTypeAddPage(){
+        return "type/typeAdd";
+    }
+
+
+    //添加分类，跳转到分类页
+    @RequestMapping("/pageTypeAdd")
+    public String pageTypeAdd(Type type){
+        typeService.typeAdd(type);
+        return "redirect:/type/toType";
     }
 
 }

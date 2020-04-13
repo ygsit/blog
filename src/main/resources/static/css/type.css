@@ -184,3 +184,32 @@
 #addTypeView .biaodan{
     width: 200px;
 }
+
+
+.TypeButton{
+    width: 64px;
+    height: 38px;
+    color: rgb(0, 181, 173);
+    background-color: white;
+    border: 1px solid rgb(0, 181, 173);
+    font-weight: bolder;
+    margin-left: 71px;
+}
+
+.TypeInput{
+    width: 934px;
+    height: 38px;
+    box-sizing: border-box;
+    padding-left: 5px;
+    margin-left: -4px;
+    vertical-align: top;
+}
+
+.TypeInput:focus{
+    outline: 2px solid rgb(0, 181, 173);
+    border: none;
+}
+
+.TypeSubmit{
+    margin-left: 500px;
+}

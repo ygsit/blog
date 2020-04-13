@@ -23,4 +23,10 @@ public interface TypeService {
 
     //判断分类名是否存在
     Integer typeNameIsExist(String name);
+
+    //查询某一个人创建的分类
+    List<Type> findAllByPage(int page, int limit, Type type);
+
+    //查询某一个人创建的分类数量
+    Integer findCountsByUid(Type type);
 }

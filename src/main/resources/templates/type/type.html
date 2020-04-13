@@ -59,7 +59,7 @@
         </div>
 
 
-        <!--新增分类窗口-->
+        <!--&lt;!&ndash;新增分类窗口&ndash;&gt;
         <div id="addTypeView" style="display: none;">
             <br>
             <form class="layui-form" method="post" th:action="@{/type/toType}">
@@ -78,12 +78,12 @@
                         <input type="submit" class="layui-btn" lay-submit lay-filter="typeAdd" value="立即添加"/>
                     </div>
                 </div>
-            </form>
+            </form>-->
         </div>
 
         <div th:replace="~{fragments/footer :: footer}"></div>
 
-        <script>
+        <!--<script>
             layui.use(['form', 'layer'], function () {
                 var form = layui.form;
                 var layer = layui.layer;
@@ -104,6 +104,6 @@
                     return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                 });
             })
-        </script>
+        </script>-->
     </body>
 </html>

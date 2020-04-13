@@ -32,4 +32,7 @@ public interface UserService {
 
     //用户信息修改
     void userupdate(User user);
+
+    //根据id查询姓名
+    String findUsernameByUid(Integer uid);
 }
