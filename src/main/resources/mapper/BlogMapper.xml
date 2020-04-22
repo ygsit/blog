@@ -49,6 +49,8 @@
           b.uid = u.uid
         AND
           b.tid = t.tid
+        AND
+          b.isPublic = 1
         ORDER BY
 		  createTime DESC
         limit
@@ -57,7 +59,7 @@
 
     <!--查询博客总数-->
     <select id="findTotalCounts" resultType="java.lang.Integer">
-        select count(bid) from blog
+        select count(bid) from blog where isPublic = 1
     </select>
 
     <!--查询一页的博客-->
@@ -78,6 +80,8 @@
           b.uid = u.uid
         AND
           b.tid = t.tid
+        AND
+          b.isPublic = 1
         ORDER BY
 		  createTime DESC
         limit
@@ -92,5 +96,12 @@
           blog
         where
           tid = #{tid}
+        AND
+          isPublic = 1
+    </select>
+
+    <!--查询是否有与此相关的博客-->
+    <select id="findTypeBlogs" parameterType="integer" resultType="integer">
+        select count(bid) from blog where tid = #{tid}
     </select>
 </mapper>

@@ -14,8 +14,8 @@
     <body>
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="nav_2">
-            <a th:href="@{/type/toTypeList}" class="nav_2_list">管理</a>
-            <bottom type="bottom" class="nav_2_add" onclick="addType()">新增</bottom>
+            <a th:href="@{/type/toTypeList}" class="nav_2_list">管理我的分类</a>
+            <bottom type="bottom" class="nav_2_add" onclick="addType()">新增分类</bottom>
         </div>
         <div class="layoutBody">
             <div class="layui-container sort">
@@ -58,52 +58,12 @@
             </div>
         </div>
 
-
-        <!--&lt;!&ndash;新增分类窗口&ndash;&gt;
-        <div id="addTypeView" style="display: none;">
-            <br>
-            <form class="layui-form" method="post" th:action="@{/type/toType}">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">分类名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required|typeNameIsNotExist" placeholder="请输入博客分类名" class="layui-input biaodan">
-                    </div>
-                </div>
-                <br>
-
-                <input type="hidden" name="uid" th:value="${session.user.uid}">
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <input type="submit" class="layui-btn" lay-submit lay-filter="typeAdd" value="立即添加"/>
-                    </div>
-                </div>
-            </form>-->
-        </div>
-
         <div th:replace="~{fragments/footer :: footer}"></div>
-
-        <!--<script>
-            layui.use(['form', 'layer'], function () {
-                var form = layui.form;
-                var layer = layui.layer;
-                //监听添加分类
-                form.on('submit(typeAdd)', function(data){
-                    $.ajax({
-                        url:'/type/typeAdd',
-                        method:'post',
-                        data:data.field,
-                        dataType:'JSON',
-                        success:function(res){
-                            console.log(res);
-                        },
-                        error:function (res) {
-                            console.log("提交失败")
-                        }
-                    })
-                    return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-                });
-            })
-        </script>-->
     </body>
+    <script>
+        $(function () {
+            //用于显示当前页面
+            $("#type").addClass('layui-this');
+        })
+    </script>
 </html>

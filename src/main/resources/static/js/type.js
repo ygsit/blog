@@ -1,6 +1,4 @@
 $(function () {
-    //用于显示当前页面
-    $("#type").addClass('layui-this');
 
     //表单校验方法
     layui.use(['form', 'jquery'], function(){
@@ -44,7 +42,13 @@ function findByTid(el) {
 
 //增加分类
 function addType() {
-    /*layui.use('layer',function () {
+    location.href="/type/toTypeAddPage"
+}
+
+
+//显示添加窗口
+function showAddView() {
+    layui.use('layer',function () {
         var layer = layui.layer;
         layer.open({
             type:1,//类型
@@ -53,8 +57,7 @@ function addType() {
             shadeClose:true,//点击遮罩层关闭
             content: $('#addTypeView')//打开的内容
         });
-    })*/
-    location.href="/type/toTypeAddPage"
+    })
 }
 
 //重置

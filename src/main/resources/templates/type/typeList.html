@@ -16,9 +16,9 @@
 
 
         <!--正文部分-->
-        <div class="nav_2">
-            <a th:href="@{/type/toTypeList}" class="nav_2_list">管理</a>
-            <bottom type="bottom" class="nav_2_add" onclick="addType()">新增</bottom>
+        <div class="nav_2" th:if="${manager == null}">
+            <a th:href="@{/type/toTypeList}" class="nav_2_list">管理我的分类</a>
+            <bottom type="bottom" class="nav_2_add" onclick="addType()">新增分类</bottom>
         </div>
         <div class="layoutBody">
             <div class="layui-container">
@@ -35,8 +35,8 @@
                         <button class="layui-btn layui-btn-danger" onclick="searchReset()"><i class="layui-icon">&#xe669;</i>重置
                         </button>
                     </div>
-                    <div style="float: right; margin-top: -40px">
-                        <button class="layui-btn layui-btn-normal" onclick="addType()"><i
+                    <div style="float: right; margin-top: -40px" th:if="${manager != null}">
+                        <button class="layui-btn layui-btn-normal" onclick="showAddView()"><i
                                 class="layui-icon">&#xe654;</i>添加
                         </button>
                     </div>
@@ -68,6 +68,31 @@
                     </div>
                 </form>
             </div>
+
+
+
+            <!--编辑分类窗口-->
+            <div id="editTypeView" style="display: none;">
+                <br>
+                <form class="layui-form" method="post" lay-filter="updateForm">
+                    <input type="hidden" name="tid">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分类名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" lay-verify="required|typeNameIsNotExist" placeholder="请输入博客分类名" class="layui-input biaodan">
+                        </div>
+                    </div>
+                    <br>
+
+                    <input type="hidden" name="uid" th:value="${session.user.uid}">
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="submit" class="layui-btn" lay-submit lay-filter="typeEdit" value="立即修改"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
 
@@ -84,6 +109,9 @@
             var isManager = $("#isManger").val();
             if(isManager != ""){
                 uid = "";
+                $("#typeManage").addClass('layui-this');
+            } else {
+                $("#type").addClass('layui-this');
             }
             layui.use(['table', 'element', 'form', 'layer'], function () {
                 var table = layui.table;
@@ -96,7 +124,7 @@
                     elem: '#typeList'
                     , url: '/type/findAll?uid='+uid
                     , cellMinWidth: 80
-                    , id: 'userList'
+                    , id: 'typeList'
                     , cols: [[
                         {align: 'center', title: '编号', type: 'numbers', width: 100}
                         , {field: 'tid', title: 'ID', hide: true, align: 'center'}
@@ -123,66 +151,67 @@
 
 
                 //监听操作按钮
-                /*table.on('tool(userList)', function (obj) {
+                table.on('tool(typeList)', function (obj) {
                     var data = obj.data;
                     console.log(data)
                     if (obj.event === 'del') {
-                        layer.confirm('真的删除行么', function (index) {
+                        layer.confirm('确定删除吗', function (index) {
                             obj.del();
                             layer.close(index);
-                            $.post("/user/deleteById", {"uid": data.uid});
+                            $.post("/type/deleteById", {"tid": data.tid}, function (result) {
+                                if(result == "false"){
+                                    layer.alert("存在此分类的博客，删除分类失败！")
+                                }
+                            });
+                            table.reload('typeList', {
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
                         });
                     } else if (obj.event === 'edit') {
-                        //给表单赋初值
+                       //给表单赋初值
                         form.val("updateForm", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                            "tid": data.tid,
+                            "name": data.name,
                             "uid": data.uid
-                            , "username": data.username // "name": "value"
-                            , "password": data.password
-                            , "name": data.name
-                            , "sex": data.sex
-                            , "phone": data.phone
-                            , "permission": data.permission
                         });
                         //让表单出现
                         layer.open({
                             type: 1,//类型
-                            area: ['400px', '480px'],//定义宽和高
-                            title: '编辑用户信息',//题目
+                            area: ['400px', '220px'],//定义宽和高
+                            title: '编辑分类信息',//题目
                             shadeClose: true,//点击遮罩层关闭
-                            content: $('#userEditView')//打开的内容
+                            content: $('#editTypeView')//打开的内容
                         });
                         //监听编辑用户信息
-                        form.on('submit(userEdit)', function (data) {
+                        form.on('submit(typeEdit)', function (data) {
                             var json = data.field;
                             console.log(json)
-                            $.post("/user/userupdate", {
-                                "uid": json.uid,
-                                "username": json.username,
-                                "password": json.password,
-                                "name": json.name,
-                                "sex": json.sex,
-                                "phone": json.phone,
-                                "permission": json.permission
+                            $.post("/type/typeUpdate", {
+                                "tid": json.tid,
+                                "name": json.name
                             }, function (result) {
+                                if(result == "false"){
+                                    alert("存在此分类的博客，编辑分类失败！")
+                                }
                             })
-                            table.reload();
+                            // table.reload();
                         });
                     }
-                });*/
+                });
 
 
                 //页面重载
-               /* var $ = layui.$, active = {
+               var $ = layui.$, active = {
                     reload: function () {
-                        var username = $('#username').val();
                         var name = $('#name').val();
                         //执行重载
-                        table.reload('userList', {
+                        table.reload('typeList', {
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
                             , where: {
-                                username: username,
                                 name: name
                             }
                         });
@@ -209,7 +238,7 @@
                         }
                     })
                     table.reload();
-                });*/
+                });
 
             })
         </script>

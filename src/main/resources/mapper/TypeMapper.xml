@@ -87,4 +87,24 @@
         </where>
     </select>
 
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="integer">
+        delete from type where tid = #{tid}
+    </delete>
+
+    <!--修改分类-->
+    <update id="typeUpdate" parameterType="Type">
+        update
+          type
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="uid != null and uid != ''">
+                uid = #{uid}
+            </if>
+        </trim>
+        where tid = #{tid}
+    </update>
+
 </mapper>

@@ -60,4 +60,14 @@ public class TypeServiceImpl implements TypeService {
     public Integer findCountsByUid(Type type) {
         return typeDao.findCountsByUid(type);
     }
+
+    @Override
+    public void deleteById(Integer tid) {
+        typeDao.deleteById(tid);
+    }
+
+    @Override
+    public void typeUpdate(Type type) {
+        typeDao.typeUpdate(type);
+    }
 }

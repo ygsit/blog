@@ -1,9 +1,6 @@
 package com.blog.controller;
 
-import com.blog.domain.BlogDto;
-import com.blog.domain.Type;
-import com.blog.domain.TypeDto;
-import com.blog.domain.TypePageDto;
+import com.blog.domain.*;
 import com.blog.service.BlogService;
 import com.blog.service.TypeService;
 import com.blog.service.UserService;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -178,6 +176,35 @@ public class TypeController {
     public String pageTypeAdd(Type type){
         typeService.typeAdd(type);
         return "redirect:/type/toType";
+    }
+
+    //删除分类
+    @RequestMapping("/deleteById")
+    @ResponseBody
+    public String deleteById(Integer tid){
+        //查询是否有与此相关的博客
+        Integer count = blogService.findTypeBlogs(tid);
+        if(count != null && count != 0){
+            return "false";
+        }
+        typeService.deleteById(tid);
+        return "true";
+    }
+
+
+    //编辑博客
+    @RequestMapping("/typeUpdate")
+    @ResponseBody
+    public String typeUpdate(Type type, HttpServletRequest request){
+        //查询是否有与此相关的博客
+        Integer count = blogService.findTypeBlogs(type.getTid());
+        if(count != null && count != 0){
+            return "false";
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        type.setUid(user.getUid());
+        typeService.typeUpdate(type);
+        return "true";
     }
 
 }

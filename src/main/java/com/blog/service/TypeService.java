@@ -29,4 +29,10 @@ public interface TypeService {
 
     //查询某一个人创建的分类数量
     Integer findCountsByUid(Type type);
+
+    //根据id删除
+    void deleteById(Integer tid);
+
+    //修改分类
+    void typeUpdate(Type type);
 }

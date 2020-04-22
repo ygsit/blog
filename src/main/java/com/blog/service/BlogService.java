@@ -26,4 +26,6 @@ public interface BlogService {
     //根据分类id查询分类博客的数量
     Integer findPageTypeBlogCount(Integer tid);
 
+    //查询是否有与此相关的博客
+    Integer findTypeBlogs(Integer tid);
 }

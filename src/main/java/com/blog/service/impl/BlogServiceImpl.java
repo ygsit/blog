@@ -56,4 +56,9 @@ public class BlogServiceImpl implements BlogService {
         return blogDao.findPageTypeBlogCount(tid);
     }
 
+    @Override
+    public Integer findTypeBlogs(Integer tid) {
+        return blogDao.findTypeBlogs(tid);
+    }
+
 }
