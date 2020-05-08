@@ -18,23 +18,24 @@
 
         <div class="layoutBody">
             <div class="layui-container">
-                <form th:action="@{/blog/saveBlog}" onsubmit="return checkForm()">
+                <form th:action="@{/blog/{blogHref}(blogHref=${blogHref})}" onsubmit="return checkForm()" method="post">
                     <input type="hidden" name="uid" th:if="${session.user ne null}" th:value="${session.user.uid}">
                     <button class="blogButton">标题</button>
-                    <input type="text" placeholder="请输入标题" class="blogInput" name="title" id="title" onblur="checkTitle()"><br><br>
+                    <input type="text" placeholder="请输入标题" class="blogInput" name="title" id="title" onblur="checkTitle()" th:value="${blog.title}"><br><br>
 
                     <div id="md-content" style="z-index: 1 !important;">
-                        <textarea placeholder="博客内容" name="content" id="content" style="display: none"></textarea>
+                        <textarea placeholder="博客内容" name="content" id="content" style="display: none" th:text="${blog.content}"></textarea>
                     </div>
 
                     <button class="blogButton">分类</button>
                     <select class="blogInput" name="tid">
-                        <option th:each="type:${types}" th:value="${type.tid}" th:text="${type.name}"></option>
+                        <option th:each="type:${types}" th:value="${type.tid}" th:text="${type.name}" th:selected="${type.name == tname}? true : false"></option>
                     </select><br><br>
                     <div class="blogRadio">
-                        <input type="radio" name="isPublic" value="0">私密&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="isPublic" value="1" checked>公开
+                        <input type="radio" name="isPublic" value="0" th:checked="${blog.isPublic == 0}? true : false">私密&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="isPublic" value="1" th:checked="${blog.isPublic == 1}? true : false">公开
                     </div><br><br>
+                    <input type="hidden" th:value="${manager}" id="isManger" name="manager">
                     <input type="submit" value="立即发布" class="layui-btn blogSubmit">
                 </form>
 
@@ -58,6 +59,26 @@
                     path    : "/lib/editormd/lib/"
                 });
             });
+
+            //监听写博客
+            layui.use('form', function () {
+                var form = layui.form;
+                form.on('submit(typeAdd)', function(data){
+                    $.ajax({
+                        url:'/type/typeAdd',
+                        method:'post',
+                        data:data.field,
+                        dataType:'JSON',
+                        success:function(res){
+                            console.log(res);
+                        },
+                        error:function (res) {
+                            console.log("提交失败")
+                        }
+                    })
+                    table.reload();
+                });
+            })
         </script>
     </body>
 </html>

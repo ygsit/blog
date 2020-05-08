@@ -23,11 +23,6 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<HashMap<String, Object>> showMyBlogs(int uid) {
-        return blogDao.showMyBlogs(uid);
-    }
-
-    @Override
     public List<BlogDto> findByTid(Integer tid, Integer currentPage, Integer pageCount) {
         Map<String, Object> map = new HashMap<>();
         int offset = (currentPage-1)*pageCount;
@@ -59,6 +54,31 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Integer findTypeBlogs(Integer tid) {
         return blogDao.findTypeBlogs(tid);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> listBlogs(int page, int limit, Blog blog) {
+        Map<String, Object> map = new HashMap<>();
+        int begin = (page - 1) * limit;
+        map.put("begin", begin);
+        map.put("limit", limit);
+        map.put("blog", blog);
+        return blogDao.listBlogs(map);
+    }
+
+    @Override
+    public Integer countBlog(Blog blog) {
+        return blogDao.countBlog(blog);
+    }
+
+    @Override
+    public void deleteById(Integer bid) {
+        blogDao.deleteById(bid);
+    }
+
+    @Override
+    public void updateBlog(Blog blog) {
+        blogDao.updateBlog(blog);
     }
 
 }

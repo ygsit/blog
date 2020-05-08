@@ -11,9 +11,6 @@ public interface BlogService {
     //博客保存
     void saveBlog(Blog blog);
 
-    //我的博客
-    List<HashMap<String, Object>> showMyBlogs(int uid);
-
     //分类页面显示的博客
     List<BlogDto> findByTid(Integer tid, Integer currentPage, Integer pageCount);
 
@@ -28,4 +25,16 @@ public interface BlogService {
 
     //查询是否有与此相关的博客
     Integer findTypeBlogs(Integer tid);
+
+    //博客列表
+    List<HashMap<String, Object>> listBlogs(int page, int limit, Blog blog);
+
+    //根据传入信息查询博客数量
+    Integer countBlog(Blog blog);
+
+    //删除博客
+    void deleteById(Integer bid);
+
+    //更新博客
+    void updateBlog(Blog blog);
 }

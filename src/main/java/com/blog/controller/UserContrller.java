@@ -134,4 +134,11 @@ public class UserContrller {
         return "user/myInfo";
     }
 
+    //退出
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "login";
+    }
+
 }

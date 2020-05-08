@@ -104,4 +104,75 @@
     <select id="findTypeBlogs" parameterType="integer" resultType="integer">
         select count(bid) from blog where tid = #{tid}
     </select>
+
+    <!--博客列表-->
+    <select id="listBlogs" parameterType="map" resultType="map">
+        select
+            b.bid bid,
+            b.title title,
+            b.content content,
+            b.view view,
+            b.isPublic isPublic,
+            DATE_FORMAT(b.createTime, '%Y-%m-%d %H:%i:%s' ) showTime,
+            u.name uname,
+            t.name tname
+        from
+            type t,
+            user u,
+            blog b
+        where
+            b.uid = u.uid
+        AND
+            b.tid = t.tid
+            <if test="blog.uid != null and blog.uid != ''">
+                and b.uid = #{blog.uid}
+            </if>
+            <if test="blog.title != null and blog.title != ''">
+                and title like '%${blog.title}%'
+            </if>
+        ORDER BY
+            b.bid
+        limit
+            #{begin}, #{limit}
+    </select>
+
+    <!--根据传入信息查询博客数量-->
+    <select id="countBlog" parameterType="Blog" resultType="integer">
+        select
+          count(bid)
+        from
+          blog
+        <where>
+            <if test="uid != null and uid != ''">
+                uid = #{uid}
+            </if>
+            <if test="title != null and title != ''">
+                and title like CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+        </where>
+    </select>
+
+    <!--删除博客-->
+    <delete id="deleteById" parameterType="integer">
+        delete from blog where bid = #{bid}
+    </delete>
+
+    <!--更新博客-->
+    <update id="updateBlog" parameterType="Blog">
+        update blog
+        <trim prefix="set" suffixOverrides="," suffix=" where title = #{title}">
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="tid != null and tid != ''">
+                tid = #{tid},
+            </if>
+            <if test="isPublic != null and isPublic != ''">
+                isPublic = #{isPublic},
+            </if>
+        </trim>
+    </update>
 </mapper>

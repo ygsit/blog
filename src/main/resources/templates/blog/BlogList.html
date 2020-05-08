@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>博客列表</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <link rel="stylesheet" href="../../static/css/blog.css" th:href="@{/css/blog.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/blog.js" th:src="@{/js/blog.js}"></script>
+    </head>
+    <body>
+
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="layoutBody">
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div class="demoTable">
+                        <form id="form" style="display: inline;">
+                            博客标题
+                            <div class="layui-inline">
+                                <input class="layui-input" name="title" id="title">
+                            </div>
+                        </form>
+                        &nbsp;&nbsp;<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索
+                    </button>
+                        <button class="layui-btn layui-btn-danger" onclick="searchReset()"><i class="layui-icon">&#xe669;</i>重置
+                        </button>
+                    </div>
+                    <div style="float: right; margin-top: -40px">
+                        <a class="layui-btn layui-btn-normal" th:href="@{/blog/writeBlog}">写一篇
+                        </a>
+                    </div>
+                </div>
+
+                <table class="layui-hide" id="blogList" lay-filter="blogList"></table>
+                <input type="hidden" th:value="${session.user.uid}" id="userId">
+                <input type="hidden" th:value="${manager}" id="isManger">
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+        </script>
+
+        <script th:inline="none">
+            var uid = $("#userId").val();
+            var isManager = $("#isManger").val();
+            if(isManager != ""){
+                uid = "";
+                $("#blogManage").addClass('layui-this');
+            } else {
+                $("#myBlogs").addClass('layui-this');
+            }
+
+            layui.use(['table', 'element', 'form', 'layer'], function () {
+                var table = layui.table;
+                var element = layui.element;
+                var form = layui.form;
+                var layer = layui.layer;
+
+                //数据表格渲染
+                table.render({
+                    elem: '#blogList'
+                    , url: '/blog/listBlogs?uid='+uid
+                    , cellMinWidth: 80
+                    , id: 'blogList'
+                    , cols: [[
+                        {align: 'center', title: '编号', type: 'numbers', width: 100}
+                        , {field: 'bid', title: 'ID', hide: true, align: 'center'}
+                        , {field: 'title', title: '标题', sort: true, align: 'center', width: 150}
+                        , {field: 'content', title: '正文', align: 'center', width: 150}
+                        , {field: 'view', title: '浏览次数', sort: true, align: 'center'}
+                        , {field: 'isPublic', title: '是否公开', sort: true, align: 'center'}
+                        , {field: 'showTime', title: '发布时间', align: 'center', width: 150}
+                        , {field: 'tname', title: '博客分类', align: 'center'}
+                        , {field: 'uname', title: '发布人', align: 'center'}
+                        , {field: 'right', title: '操作', width: 180, align: 'center', toolbar: "#barDemo"}
+                    ]]
+                    , page: true
+                    , limits: [3, 5, 8, 10, 20] //控制多少行一页（默认五条一页）
+                    , limit: 5 //每页默认显示的数量
+                    , done: function (res, curr, count) {
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        console.log(res);
+                        //得到当前页码
+                        console.log(curr);
+                        //得到数据总量
+                        console.log(count);
+                    }
+
+                });
+
+
+                //监听操作按钮
+                table.on('tool(blogList)', function (obj) {
+                    var data = obj.data;
+                    console.log(data)
+                    if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del();
+                            layer.close(index);
+                            $.post("/blog/deleteById", {"bid": data.bid});
+                        });
+                    } else if (obj.event === 'edit') {
+                        console.log(data);
+                        if(isManager != ""){
+                            location.href = "/blog/writeBlog?title="+data.title+"&content="+data.content+"&tname="+data.tname+"&isPublic="+data.isPublic+"&isUpdate=1&manager=1";
+                        } else{
+                            location.href = "/blog/writeBlog?title="+data.title+"&content="+data.content+"&tname="+data.tname+"&isPublic="+data.isPublic+"&isUpdate=1";
+                        }
+                    }
+                });
+
+
+                //页面重载
+                var $ = layui.$, active = {
+                    reload: function () {
+                        var title = $('#title').val();
+                        //执行重载
+                        table.reload('blogList', {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            , where: {
+                                title: title
+                            }
+                        });
+                    }
+                };
+                $('.demoTable .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+            });
+
+        </script>
+    </body>
+</html>

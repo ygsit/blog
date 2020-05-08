@@ -41,3 +41,8 @@ function checkForm() {
         return false;
     }
 }
+
+//重置
+function searchReset() {
+    $("#title").val("");
+}
