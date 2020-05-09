@@ -45,7 +45,9 @@ public class BlogController {
         }
         model.addAttribute("types", types);
         model.addAttribute("blog", blog);
-        model.addAttribute("tname", tname);
+        if(tname!= null && tname.length() > 0){
+            model.addAttribute("tname", tname);
+        }
         if(manager!= null){
             model.addAttribute("manager", manager);
         }

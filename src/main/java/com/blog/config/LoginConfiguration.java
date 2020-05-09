@@ -25,7 +25,7 @@ public class LoginConfiguration implements WebMvcConfigurer {
                         //登录注册不拦截
                         "/login", "/getVerifyCode", "/user/**",
                         //静态资源不拦截
-                        "/css/*", "/images/*", "/js/*", "/layui/*", "/lib/*");
+                        "/css/**", "/images/**", "/js/**", "/layui/**", "/lib/**");
     }
 
 }

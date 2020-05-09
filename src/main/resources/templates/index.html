@@ -24,7 +24,7 @@
                             <span class="b bb">共<span class="number" th:text="${map.counts}">3</span>篇</span>
                         </div>
                         <div class="box-content">
-                            <div class="group" th:each="blog:${map.blogs}">
+                            <div class="group pointer" th:each="blog:${map.blogs}" th:onclick="'newPage('+${blog.bid}+')'">
                                 <div class="title">
                                     <span th:text="${blog.title}">php</span>
                                 </div>

@@ -2,3 +2,9 @@
 $(function () {
     $("#index").addClass('layui-this');
 });
+
+
+function newPage(bid) {
+    console.log(bid);
+    location.href = "/comment/toCommentPage/"+bid;
+}

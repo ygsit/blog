@@ -37,4 +37,10 @@ public interface BlogService {
 
     //更新博客
     void updateBlog(Blog blog);
+
+    //根据id查询博客
+    BlogDto findById(Integer bid);
+
+    //浏览数+1
+    void updateView(Integer bid);
 }

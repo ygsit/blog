@@ -17,11 +17,13 @@
         <div class="layoutBody">
             <div class="layui-container">
                 <div class="blog_man">
-                    <a href="#"><i class="layui-icon" style="color: #1d75b3">&#xe603;</i><span style="color: #1d75b3">管理博文</span></a>
+                    <a href="javascript:;" th:href="@{/blog/showMyBlogs(uid=${session.user.uid})}"><i class="layui-icon" style="color: #1d75b3">&#xe603;</i><span style="color: #1d75b3">管理博客</span></a>
                 </div>
                 <div style="text-align: center">
-                    <p style="color: green; font-size: 20px">博客发布成功!</p><br>
-                    <a href="#" class="write_hover">再写一篇</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="write_hover">返回首页</a>
+                    <img src="../../static/images/success.png" th:src="@{/images/success.png}">
+                    <p style="color: #1d75b3; font-size: 30px">博客发布成功!</p><br>
+                    <a href="javascript:;" th:href="@{/blog/writeBlog(uid=${session.user.uid})}" class="write_hover">再写一篇</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:;" class="write_hover" th:href="@{/}">返回首页</a>
                 </div>
             </div>
         </div>

@@ -81,4 +81,14 @@ public class BlogServiceImpl implements BlogService {
         blogDao.updateBlog(blog);
     }
 
+    @Override
+    public BlogDto findById(Integer bid) {
+        return blogDao.findById(bid);
+    }
+
+    @Override
+    public void updateView(Integer bid) {
+        blogDao.updateView(bid);
+    }
+
 }

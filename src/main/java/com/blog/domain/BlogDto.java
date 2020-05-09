@@ -6,6 +6,7 @@ import java.util.Date;
  * 博客展示页
  */
 public class BlogDto {
+    private Integer bid;
     private String title;
     private String content;
     private Date createTime;
@@ -13,6 +14,14 @@ public class BlogDto {
     private Integer view;
     private String username;
     private String tname;
+
+    public Integer getBid() {
+        return bid;
+    }
+
+    public void setBid(Integer bid) {
+        this.bid = bid;
+    }
 
     public String getTitle() {
         return title;

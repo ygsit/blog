@@ -16,6 +16,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         //跳转到登录页面
+        request.setAttribute("permission_err", "暂无权限，请先登录！");
         request.getRequestDispatcher("/login").forward(request, response);
         return false;
     }
