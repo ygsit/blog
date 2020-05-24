@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blog.dao.CommentDao">
+
+    <!--根据id查看对应的根评论信息-->
+    <select id="listComments" parameterType="integer" resultType="CommentDto">
+        select
+          c.cid,
+          c.content,
+          DATE_FORMAT( c.createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          c.parentId,
+          c.rootId,
+          b.title bname,
+          u.username
+        from
+          comment c,
+          blog b,
+          user u
+        where
+          c.bid = #{bid}
+        AND
+          c.bid = b.bid
+        AND
+          c.uid = u.uid
+    </select>
+
+    <!--保存评论-->
+    <insert id="saveComment" parameterType="Comment">
+        insert into
+          comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null and content != ''">
+                content,
+            </if>
+            <if test="bid != null and bid != ''">
+                bid,
+            </if>
+            <if test="uid != null and uid != ''">
+                uid,
+            </if>
+            <if test="parentId != null and parentId != ''">
+                parentId,
+            </if>
+            <if test="rootId != null and rootId != ''">
+                rootId,
+            </if>
+            createTime
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="bid != null and bid != ''">
+                #{bid},
+            </if>
+            <if test="uid != null and uid != ''">
+                #{uid},
+            </if>
+            <if test="parentId != null and parentId != ''">
+                #{parentId},
+            </if>
+            <if test="rootId != null and rootId != ''">
+                #{rootId},
+            </if>
+            NOW()
+        </trim>
+    </insert>
+
+    <!--根据父id找到评论对应的用户名-->
+    <select id="getParentUsername" parameterType="integer" resultType="string">
+        select
+          u.username
+        from
+          comment c,
+          user u
+        where
+          c.uid = u.uid
+        and
+          c.cid = #{parentId}
+    </select>
+</mapper>

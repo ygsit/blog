@@ -6,5 +6,5 @@ $(function () {
 
 function newPage(bid) {
     console.log(bid);
-    location.href = "/comment/toCommentPage/"+bid;
+    location.href = "/comment/toCommentPage/"+bid+"/1";
 }

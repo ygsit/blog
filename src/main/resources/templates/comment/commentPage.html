@@ -5,16 +5,88 @@
         <title>博客详情页</title>
         <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
         <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <link rel="stylesheet" href="../../static/css/comment.css" th:href="@{/css/comment.css}">
         <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
         <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
         <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/comment.js" th:src="@{/js/comment.js}"></script>
     </head>
     <body>
         <div th:replace="~{fragments/header :: header}"></div>
 
         <div class="layoutBody">
             <div class="layui-container">
-                sorry，该功能还未开发，请期待下一个版本！
+                <div class="box">
+                    <div class="box-header">
+                        <div>
+                            <div class="head_left">
+                                <i class="layui-icon">&#xe612;</i> <span th:text="${blog.username}">用户名</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="layui-icon">&#xe637;</i> <span th:text="${blog.showTime}">日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="iconfont">&#xe60c;</i> <span th:text="${blog.view}">浏览数</span>
+                            </div>
+                            <div class="head_right" th:text="${blog.tname}">java</div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="box-middle">
+                        <div class="title" th:text="${blog.title}">标题</div>
+                        <br>
+                        <div class="content" th:text="${blog.content}">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正文
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="box-comment">
+                        <span style="font-weight: bold;font-size: 17px">评论</span>
+                        <hr>
+                        <div th:each="rootComment:${rootComments}" class="comment-content">
+                            <div class="rootComment">
+                                <div class="comment-left">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="layui-icon">&#xe612;</i> <span th:text="${rootComment.username}">用户名</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="date-style" th:text="${rootComment.createTime}">日期</span>&nbsp;:
+                                    <span th:text="${rootComment.content}">hello</span>
+                                </div>
+                                <div class="comment-right" th:onclick="'reply('+${rootComment.cid}+', '+${rootComment.cid}+', \''+${rootComment.username}+'\')'">
+                                    <label for="commentContent" style="cursor: pointer">回复</label>
+                                </div>
+                            </div>
+
+                            <!--childrenComment-->
+                            <div class="childrenComment" th:each="childrenComment:${childrenComments}" th:if="${rootComment.cid == childrenComment.rootId}">
+                                <div class="comment-left">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="layui-icon">&#xe612;</i> <span th:text="${childrenComment.username}">用户名</span>&nbsp;&nbsp;<span class="date-style">回复</span>&nbsp;&nbsp;
+                                    <span th:text="${childrenComment.parentUsername}">用户</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="date-style" th:text="${childrenComment.createTime}">日期</span>&nbsp;:
+                                    <span th:text="${childrenComment.content}">hello</span>
+                                </div>
+                                <div class="comment-right" th:onclick="'reply('+${childrenComment.cid}+', '+${rootComment.cid}+', \''+${childrenComment.username}+'\')'">
+                                    <label for="commentContent" style="cursor: pointer">回复</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="comment-info">
+                        <form th:action="@{/comment/submitComment}" onsubmit="return submitComment()" method="post">
+                            <input type="hidden" name="bid" th:value="${blog.bid}">
+                            <input type="hidden" name="uid" th:value="${session.user.uid}">
+                            <input type="hidden" name="parentId">
+                            <input type="hidden" name="rootId">
+                            <div class="layui-form-item">
+                                <textarea name="content" placeholder="请输入评论内容" class="layui-textarea"
+                                          id="commentContent"></textarea>
+                            </div>
+                            <div class="form-sub">
+                                <div class="cance-reply">
+                                    <input type="button" class="layui-btn layui-btn-primary reply-btn" value="取消回复" onclick="canceReply()">
+                                </div>
+                                <input type="submit" class="layui-btn" value="发布评论">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 

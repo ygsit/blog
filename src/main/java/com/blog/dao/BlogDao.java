@@ -3,12 +3,14 @@ package com.blog.dao;
 import com.blog.domain.Blog;
 import com.blog.domain.BlogDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Mapper
+@Repository
 public interface BlogDao {
 
     //保存博客
