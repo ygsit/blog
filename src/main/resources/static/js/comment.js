@@ -1,6 +1,14 @@
 //用于显示当前页面
 $(function () {
     $("#index").addClass('layui-this');
+
+    //获取所有的博客
+    $.post("/blog/getAllBlogs", function (result) {
+        let jsonArr = JSON.parse(result);
+        for(let obj of jsonArr){
+            $('#chooseBlog').append('<option value="'+obj.bid+'">'+obj.title+'</option>')
+        }
+    })
 });
 
 
@@ -51,4 +59,9 @@ function submitComment() {
     else {
         return false;
     }
+}
+
+//重置
+function searchReset() {
+    $("#chooseBlog option:first").prop("selected", 'selected');
 }

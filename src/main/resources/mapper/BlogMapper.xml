@@ -202,4 +202,13 @@
     <update id="updateView" parameterType="integer">
         update blog set view = view + 1 where bid  = #{bid}
     </update>
+
+    <!--查找所有博客-->
+    <select id="getBlogs" resultType="map">
+        select
+          bid,
+          title
+        from
+          blog
+    </select>
 </mapper>

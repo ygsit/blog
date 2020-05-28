@@ -19,12 +19,13 @@
                         <li class="layui-nav-item" id="index"><a href="javascript:;" th:href="@{/}">首页</a></li>
                         <li class="layui-nav-item" id="writeBlog"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/blog/writeBlog}">写博客</a></li>
                         <li class="layui-nav-item" id="type"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/type/toType}">分类</a></li>
-                        <li class="layui-nav-item" id="userManage"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/toUserList}">用户管理</a></li>
-                        <li class="layui-nav-item" id="blogManage"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/blog/toBlogManage}">博客管理</a></li>
-                        <li class="layui-nav-item" id="typeManage"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/type/toTypeManage}">分类管理</a></li>
-                        <li class="layui-nav-item" id="commentManage"><a href="javascript:;" th:if="${session.user ne null}">评论管理</a></li>
-                        <li class="layui-nav-item" id="myInfo"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/showMe(uid=${session.user.uid})}">我的信息</a></li>
+                        <li class="layui-nav-item" id="userManage"><a href="javascript:;" th:if="${session.user ne null && session.user.permission == '管理员'}" th:href="@{/user/toUserList}">用户管理</a></li>
+                        <li class="layui-nav-item" id="blogManage"><a href="javascript:;" th:if="${session.user ne null && session.user.permission == '管理员'}" th:href="@{/blog/toBlogManage}">博客管理</a></li>
+                        <li class="layui-nav-item" id="typeManage"><a href="javascript:;" th:if="${session.user ne null && session.user.permission == '管理员'}" th:href="@{/type/toTypeManage}">分类管理</a></li>
+                        <li class="layui-nav-item" id="commentManage"><a href="javascript:;" th:if="${session.user ne null && session.user.permission == '管理员'}" th:href="@{/comment/toCommentManage}">评论管理</a></li>
                         <li class="layui-nav-item" id="myBlogs"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/blog/showMyBlogs(uid=${session.user.uid})}">我的博客</a></li>
+                        <li class="layui-nav-item" id="myComments"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/comment/showMyComments(uid=${session.user.uid})}">我的评论</a></li>
+                        <li class="layui-nav-item" id="myInfo"><a href="javascript:;" th:if="${session.user ne null}" th:href="@{/user/showMe(uid=${session.user.uid})}">我的信息</a></li>
                     </ul>
                     <ul class="layui-nav layui-layout-right">
                         <li class="layui-nav-item">

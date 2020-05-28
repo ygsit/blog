@@ -79,4 +79,97 @@
         and
           c.cid = #{parentId}
     </select>
+
+    <!--评论列表-->
+    <select id="listManageComments" parameterType="map" resultType="CommentDto">
+        select
+          c.cid,
+          c.content,
+          DATE_FORMAT( c.createTime, '%Y-%m-%d %H:%i:%s' ) createTime,
+          c.parentId,
+          b.title bname,
+          u.username
+        from
+          comment c,
+          blog b,
+          user u
+        where
+          c.bid = b.bid
+        AND
+          c.uid = u.uid
+        <if test="comment.bid != null and comment.bid != ''">
+        AND c.bid = #{comment.bid}
+        </if>
+        <if test="comment.uid != null and comment.uid != ''">
+        AND c.uid = #{comment.uid}
+        </if>
+        order by
+          c.cid
+        limit
+          #{begin}, #{limit}
+    </select>
+
+    <!--根据传入信息查询评论数量-->
+    <select id="countComment" parameterType="Comment" resultType="integer">
+        select
+            count(cid)
+        from
+            comment
+        <where>
+            <if test="bid != null and bid != ''">
+                AND bid = #{bid}
+            </if>
+            <if test="uid != null and uid != ''">
+                AND uid = #{uid}
+            </if>
+        </where>
+    </select>
+
+    <!--删除评论及子评论-->
+    <delete id="deleteComment" parameterType="map">
+        delete from
+          comment
+        where
+          cid = #{cid}
+        <if test="list != null and list.size > 0">
+            or
+              cid
+            in
+            <foreach collection="list" item="item" open="(" separator="," close=")">
+                #{item.cid}
+            </foreach>
+        </if>
+    </delete>
+
+    <!--根据cid查询判断是否是根评论-->
+    <select id="rootComment" parameterType="integer" resultType="Comment">
+        select cid, rootId from  comment where cid  = #{cid}
+    </select>
+
+    <!--删除根评论及子评论-->
+    <delete id="deleteRootComment" parameterType="map">
+        delete from
+          comment
+        where
+          cid = #{cid}
+        <if test="list != null and list.size > 0">
+            or
+            cid
+            in
+            <foreach collection="list" item="item" open="(" separator="," close=")">
+                #{item.cid}
+            </foreach>
+        </if>
+    </delete>
+
+    <!--查询所有根评论下的评论-->
+    <select id="listRootComments" parameterType="integer" resultType="comment">
+        select cid from  comment where rootId = #{cid}
+    </select>
+
+    <!--查询所有评论下的子评论-->
+    <select id="listChildrenComments" parameterType="integer" resultType="comment">
+        select cid from  comment where parentId = #{cid}
+    </select>
+
 </mapper>

@@ -91,4 +91,9 @@ public class BlogServiceImpl implements BlogService {
         blogDao.updateView(bid);
     }
 
+    @Override
+    public List<HashMap<String, Object>> getBlogs() {
+        return blogDao.getBlogs();
+    }
+
 }

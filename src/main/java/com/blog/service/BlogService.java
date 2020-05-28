@@ -43,4 +43,7 @@ public interface BlogService {
 
     //浏览数+1
     void updateView(Integer bid);
+
+    //查找所有博客
+    List<HashMap<String, Object>> getBlogs();
 }

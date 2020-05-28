@@ -116,4 +116,14 @@ public class BlogController {
         }
         return "blog/BlogList";
     }
+
+    //查找所有博客
+    @RequestMapping("/getAllBlogs")
+    @ResponseBody
+    public String getAllBlogs(Model model) throws JsonProcessingException {
+        //查询所有博客
+        List<HashMap<String, Object>> blogs = blogService.getBlogs();
+        model.addAttribute("blogs", blogs);
+        return new ObjectMapper().writeValueAsString(blogs);
+    }
 }

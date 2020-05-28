@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>评论管理</title>
+        <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+        <link rel="stylesheet" href="../../static/css/nav.css" th:href="@{/css/nav.css}">
+        <link rel="stylesheet" href="../../static/css/comment.css" th:href="@{/css/comment.css}">
+        <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script src="../../static/js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+        <script src="../../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+        <script src="../../static/js/comment.js" th:src="@{/js/comment.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="layoutBody">
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div class="demoTable">
+                        <div style="display: inline;">
+                            选择博客
+                            <div class="layui-inline">
+                                <select name="bid" style="height: 38px; width: 180px" id="chooseBlog">
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+                        &nbsp;&nbsp;<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索
+                    </button>
+                        <button class="layui-btn layui-btn-danger" onclick="searchReset()"><i class="layui-icon">&#xe669;</i>重置
+                        </button>
+                    </div>
+                </div>
+
+                <table class="layui-hide" id="commentList" lay-filter="commentList"></table>
+                <input type="hidden" th:value="${session.user.uid}" id="userId">
+                <input type="hidden" th:value="${manager}" id="isManger">
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+        </script>
+
+        <script th:inline="none">
+            var uid = $("#userId").val();
+            var isManager = $("#isManger").val();
+            if(isManager != ""){
+                uid = "";
+                $("#commentManage").addClass('layui-this');
+            } else {
+                $("#myComments").addClass('layui-this');
+            }
+
+            layui.use(['table', 'element', 'form', 'layer'], function () {
+                var table = layui.table;
+                var element = layui.element;
+                var form = layui.form;
+                var layer = layui.layer;
+
+                var listpage;
+                var listcount;
+
+                //数据表格渲染
+                table.render({
+                    elem: '#commentList'
+                    , url: '/comment/listComments?uid='+uid
+                    , cellMinWidth: 80
+                    , id: 'commentList'
+                    , cols: [[
+                        {align: 'center', title: '编号', type: 'numbers', width: 100}
+                        , {field: 'cid', title: 'ID', sort: true, align: 'center', width: 100}
+                        , {field: 'content', title: '评论内容', sort: true, align: 'center'}
+                        , {field: 'createTime', title: '评论时间', align: 'center', width: 180}
+                        , {field: 'bname', title: '博客标题', sort: true, align: 'center', width: 150}
+                        , {field: 'username', title: '评论人用户名', sort: true, align: 'center', width: 150}
+                        , {field: 'parentId', title: '父评论ID', align: 'center', width: 100}
+                        , {field: 'right', title: '操作', width: 150, align: 'center', toolbar: "#barDemo"}
+                    ]]
+                    , page: true
+                    , limits: [3, 5, 8, 10, 20] //控制多少行一页（默认五条一页）
+                    , limit: 5 //每页默认显示的数量
+                    , done: function (res, curr, count) {
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        console.log(res);
+                        //得到当前页码
+                        console.log(curr);
+                        listpage = curr;
+                        //得到数据总量
+                        console.log(count);
+                        listcount = count;
+                    }
+
+                });
+
+
+                //监听操作按钮
+                table.on('tool(commentList)', function (obj) {
+                    console.log("删除" + listcount);
+                    console.log("删除" + listcount%5)  ;
+                    console.log("删除" + listpage);
+                    var data = obj.data;
+                    if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del();
+                            layer.close(index);
+                            $.post("/comment/deleteComment", {"cid": data.cid}, function (result) {
+                                console.log(result)
+                            });
+                            var bid = $('#chooseBlog').val();
+                            var page;
+                            if(listcount%5 == 1){
+                                page = listpage - 1;
+                            } else {
+                                page = listpage;
+                            }
+                            console.log(page);
+                            table.reload('commentList', {
+                                page: {
+                                    curr: page //重新从第 1 页开始
+                                }
+                                , where: {
+                                    bid: bid
+                                }
+                            });
+                        });
+                    }
+                });
+
+
+                //页面重载
+                var $ = layui.$, active = {
+                    reload: function () {
+                        var bid = $('#chooseBlog').val();
+                        //执行重载
+                        table.reload('commentList', {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            , where: {
+                                bid: bid
+                            }
+                        });
+                    }
+                };
+                $('.demoTable .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+            });
+
+        </script>
+    </body>
+</html>
