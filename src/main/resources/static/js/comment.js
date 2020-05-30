@@ -1,7 +1,5 @@
 //用于显示当前页面
 $(function () {
-    $("#index").addClass('layui-this');
-
     //获取所有的博客
     $.post("/blog/getAllBlogs", function (result) {
         let jsonArr = JSON.parse(result);
